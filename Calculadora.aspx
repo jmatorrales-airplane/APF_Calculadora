@@ -17,8 +17,7 @@
                         <asp:Label ID="tbOperation"
                         Text=""
                         runat="server"
-                        Height="10px"
-                            />
+                        Height="10px" />
                     </th>
                 </tr>
                 <tr>
@@ -26,8 +25,7 @@
                         <asp:Label ID="tbNumbers"
                         Text=""
                         runat="server" 
-                        Height="10px"
-                            />
+                        Height="10px" />
                     </th>
                 </tr>
                 <tr>

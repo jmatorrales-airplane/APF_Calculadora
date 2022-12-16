@@ -14,70 +14,80 @@ namespace APF_Calculadora
 
         }
 
+        private static double num1 = 0;
+        private static double num2 = 0;
+        private static string operationType = "";
+
+        // funcion btn numeros
         protected void btnNumClick(object sender, EventArgs e)
         {
             tbNumbers.Text += ((Button)sender).Text;
 
         }
-        private static int num1 = 0;
-        private static int num2 = 0;
-        private static string operationType = "";
+
         protected void btnOperation(object sender, EventArgs e)
         {
-            if(tbOperation.Text == "")
+            if(tbNumbers.Text.Length > 0 && tbOperation.Text.Length == 0 && operationType == "")
             {
-                num1 = Convert.ToInt32(tbNumbers.Text);
+                num1 = Convert.ToDouble(tbNumbers.Text);
                 operationType = ((Button)sender).Text;
 
                 tbOperation.Text = $"{num1} {operationType}";
 
                 tbNumbers.Text = "";
             }
-            else
+            else if(tbOperation.Text.Length > 0 && operationType == "")
             {
-                num2 = Convert.ToInt32(tbNumbers.Text);
+                operationType = ((Button)sender).Text;
+                if (tbNumbers.Text.Length > 0)
+                {
+                    num2 = Convert.ToDouble(tbNumbers.Text);
+                    operation();
+                }
+                else
+                {
+                    tbOperation.Text += $" {operationType}";
+                }
+            }
+            else if(tbOperation.Text.Length>0 && operationType != "" && tbNumbers.Text.Length > 0)
+            {
+                num2 = Convert.ToDouble(tbNumbers.Text);
                 operation();
+                operationType = ((Button)sender).Text;
+                tbOperation.Text += $" {operationType}";
             }
         }
         protected void btnResultOperation(object sender, EventArgs e)
         {
-            if(tbOperation.Text != "")
+            if(tbOperation.Text.Length > 0 && operationType != "")
             {
-                num2 = Convert.ToInt32(tbNumbers.Text);
+                num2 = Convert.ToDouble(tbNumbers.Text);
                 operation();
             }
         }
 
         private void operation()
         {
-            if (operationType == "+")
+            switch (operationType)
             {
-                tbOperation.Text = Convert.ToString(num1 + num2);
+                case "+":
+                    tbOperation.Text = Convert.ToString(num1 + num2);
+                    break;
 
-                num1 = 0; num2 = 0; operationType = "";
-                tbNumbers.Text = "";
-            }
-            else if (operationType == "-")
-            {
-                tbOperation.Text = Convert.ToString(num1 * num2);
+                case "-":
+                    tbOperation.Text = Convert.ToString(num1 - num2);
+                    break;
 
-                num1 = 0; num2 = 0; operationType = "";
-                tbNumbers.Text = "";
+                case "*":
+                    tbOperation.Text = Convert.ToString(num1 * num2);
+                    break;
+                case "/":
+                    tbOperation.Text = Convert.ToString(num1 / num2);
+                    break;
             }
-            else if (operationType == "X")
-            {
-                tbOperation.Text = Convert.ToString(num1 * num2);
-
-                num1 = 0; num2 = 0; operationType = "";
-                tbNumbers.Text = "";
-            }
-            else if (operationType == "/")
-            {
-                tbOperation.Text = Convert.ToString(num1 / num2);
-
-                num1 = 0; num2 = 0; operationType = "";
-                tbNumbers.Text = "";
-            }
+            num1 = Convert.ToInt32(tbOperation.Text);
+            num2 = 0; operationType = "";
+            tbNumbers.Text = "";
         }
     }
 }
